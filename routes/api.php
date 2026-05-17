@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\SatusehatController;
+use App\Http\Controllers\SatuSehatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test-setup', [SatusehatController::class, 'testSetup']);
 
+Route::get('/satusehat/daftar', [SatuSehatController::class, 'daftarkanPasien']);
 // Placeholder untuk stream lain (uncomment nanti):
 
 // Route::post('/auth/token', [SatusehatController::class, 'getToken'])->name('auth.token');
