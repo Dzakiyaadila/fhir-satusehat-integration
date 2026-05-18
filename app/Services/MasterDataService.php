@@ -37,7 +37,7 @@ class MasterDataService
         if ($response->status() === 404 || empty($response->json()['entry'])) {
             return [
                 'success' => false,
-                'message' => '❌ NIK Pasien tidak terdaftar di SATUSEHAT.',
+                'message' => 'NIK Pasien tidak terdaftar di SATUSEHAT.',
                 'fallback_id' => '100000000001'
             ];
         }
@@ -69,7 +69,7 @@ class MasterDataService
         if ($response->status() === 404 || empty($response->json()['entry'])) {
             return [
                 'success' => false,
-                'message' => '❌ NIK Dokter tidak terdaftar di SATUSEHAT.',
+                'message' => 'NIK Dokter tidak terdaftar di SATUSEHAT.',
                 'fallback_id' => 'N10000001'
             ];
         }

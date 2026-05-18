@@ -45,7 +45,7 @@ class AuthService
 
         // Kriteria: Handle 401 & Exception Informatif jika client_id/secret salah
         if ($response->status() === 401 || $response->failed()) {
-            throw new Exception("❌ Gagal Otentikasi SATUSEHAT: Kombinasi Client ID atau Client Secret di .env salah/tidak sah.");
+            throw new Exception("Gagal Otentikasi SATUSEHAT: Kombinasi Client ID atau Client Secret di .env salah/tidak sah.");
         }
 
         return $response->json()['access_token'];
