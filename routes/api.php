@@ -11,5 +11,6 @@ Route::get('/test-setup', [SatusehatController::class, 'testSetup']);
 // Route::post('/auth/token', [SatusehatController::class, 'getToken'])->name('auth.token');
 // Route::get('/patient/{nik}', [SatusehatController::class, 'getPatientIhs'])->name('patient.ihs');
 // Route::get('/practitioner/{nik}', [SatusehatController::class, 'getPractitionerIhs'])->name('practitioner.ihs');
-// Route::post('/location', [SatusehatController::class, 'postLocation'])->name('location.store');
+Route::post('/location', [SatusehatController::class, 'postLocation'])->name('location.store');
 // Route::post('/encounter', [SatusehatController::class, 'postEncounter'])->name('encounter.store');
+
