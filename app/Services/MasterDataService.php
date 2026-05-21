@@ -3,6 +3,7 @@
 namespace App\Services; // Perhatikan huruf S besar
 
 use Illuminate\Support\Facades\Http;
+use App\Models\IhsLookup; // Tambahan untuk Stream 3 (Cache DB)
 
 class MasterDataService
 {
@@ -21,6 +22,22 @@ class MasterDataService
      */
     public function getPatientIhs(string $nik): array
     {
+        // Cek DB Lokal Dulu (Tambahan Stream 3)
+        $cached = IhsLookup::where('nik', $nik)->where('tipe', 'pasien')->first();
+        if ($cached) {
+            if (!$cached->ditemukan) {
+                return [
+                    'success' => false,
+                    'message' => 'NIK Pasien tidak terdaftar di SATUSEHAT. (Dari Cache)',
+                    'fallback_id' => '100000000001'
+                ];
+            }
+            return [
+                'success' => true,
+                'ihs_number' => $cached->ihs_number
+            ];
+        }
+
         $token = $this->authService->getAccessToken();
         
         $response = Http::withToken($token)->get($this->baseUrl . "/Patient", [
@@ -35,6 +52,9 @@ class MasterDataService
         }
 
         if ($response->status() === 404 || empty($response->json()['entry'])) {
+            // Simpan hasil "tidak ditemukan" ke DB (Tambahan Stream 3)
+            IhsLookup::create(['nik' => $nik, 'tipe' => 'pasien', 'ditemukan' => false]);
+
             return [
                 'success' => false,
                 'message' => 'NIK Pasien tidak terdaftar di SATUSEHAT.',
@@ -42,9 +62,14 @@ class MasterDataService
             ];
         }
 
+        $ihsNumber = $response->json()['entry'][0]['resource']['id'];
+        
+        // Simpan hasil "ditemukan" ke DB (Tambahan Stream 3)
+        IhsLookup::create(['nik' => $nik, 'tipe' => 'pasien', 'ihs_number' => $ihsNumber, 'ditemukan' => true]);
+
         return [
             'success' => true,
-            'ihs_number' => $response->json()['entry'][0]['resource']['id']
+            'ihs_number' => $ihsNumber
         ];
     }
 
@@ -53,6 +78,22 @@ class MasterDataService
      */
     public function getPractitionerIhs(string $nik): array
     {
+        // Cek DB Lokal Dulu (Tambahan Stream 3)
+        $cached = IhsLookup::where('nik', $nik)->where('tipe', 'dokter')->first();
+        if ($cached) {
+            if (!$cached->ditemukan) {
+                return [
+                    'success' => false,
+                    'message' => 'NIK Dokter tidak terdaftar di SATUSEHAT. (Dari Cache)',
+                    'fallback_id' => 'N10000001'
+                ];
+            }
+            return [
+                'success' => true,
+                'ihs_number' => $cached->ihs_number
+            ];
+        }
+
         $token = $this->authService->getAccessToken();
 
         $response = Http::withToken($token)->get($this->baseUrl . "/Practitioner", [
@@ -67,6 +108,9 @@ class MasterDataService
         }
 
         if ($response->status() === 404 || empty($response->json()['entry'])) {
+            // Simpan hasil "tidak ditemukan" ke DB (Tambahan Stream 3)
+            IhsLookup::create(['nik' => $nik, 'tipe' => 'dokter', 'ditemukan' => false]);
+
             return [
                 'success' => false,
                 'message' => 'NIK Dokter tidak terdaftar di SATUSEHAT.',
@@ -74,9 +118,14 @@ class MasterDataService
             ];
         }
 
+        $ihsNumber = $response->json()['entry'][0]['resource']['id'];
+
+        // Simpan hasil "ditemukan" ke DB (Tambahan Stream 3)
+        IhsLookup::create(['nik' => $nik, 'tipe' => 'dokter', 'ihs_number' => $ihsNumber, 'ditemukan' => true]);
+
         return [
             'success' => true,
-            'ihs_number' => $response->json()['entry'][0]['resource']['id']
+            'ihs_number' => $ihsNumber
         ];
     }
 }
