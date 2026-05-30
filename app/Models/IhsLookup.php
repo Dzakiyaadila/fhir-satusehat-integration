@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class IhsLookup extends Model
 {
-    protected $fillable = ['nik', 'tipe', 'ihs_number', 'ditemukan'];
+    protected $fillable = ['nik', 'tipe', 'ihs_number', 'nama', 'ditemukan'];
     
     protected $casts = [
         'ditemukan' => 'boolean',
