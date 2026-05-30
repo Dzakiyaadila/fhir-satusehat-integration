@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Services\AuthService;
 use App\Services\MasterDataService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Http;
 
 class SatuSehatController extends Controller
 {
@@ -13,30 +12,23 @@ class SatuSehatController extends Controller
     protected $masterService;
 
     public function __construct(AuthService $authService, MasterDataService $masterService)
-    {
+
+       {
         $this->authService = $authService;
         $this->masterService = $masterService;
     }
 
-    public function daftarkanPasien(): JsonResponse
+    public function testSetup(): JsonResponse
     {
-        try {
-            // -----------------------------------------------------------------
-            // STREAM 2: AUTHENTICATION (Otentikasi & Cache via Service)
-            // -----------------------------------------------------------------
-            $token = $this->authService->getAccessToken();
-
-            
-            // =================================================================
-            // SILAKAN TEMAN YANG MENGERJAKAN STREAM 3 LANJUT DI BAWAH SINI
-            // (Tinggal ambil variabel $ihsPasien, $ihsDokter, dan $locationId untuk disave ke DB & Encounter)
-            // =================================================================
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'status'      => 'OK',
+            'message'     => 'SatuSehat Integration API is running',
+            'environment' => config('app.env'),
+        ], 200);
     }
+
+    // Akan diisi stream 3, 4, 5
+    // Stream 3: IHS Number
+    // Stream 4: Location
+    // Stream 5: Encounter
 }
