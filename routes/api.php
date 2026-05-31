@@ -12,5 +12,5 @@ Route::get('/test-setup', [SatuSehatController::class, 'testSetup']);
 // Route::post('/auth/token', [SatuSehatController::class, 'getToken'])->name('auth.token');
 // Route::get('/patient/{nik}', [SatuSehatController::class, 'getPatientIhs'])->name('patient.ihs');
 // Route::get('/practitioner/{nik}', [SatuSehatController::class, 'getPractitionerIhs'])->name('practitioner.ihs');
-// Route::post('/location', [SatuSehatController::class, 'postLocation'])->name('location.store');
+Route::post('/location/setup', [SatuSehatController::class, 'setupLocation'])->name('location.setup');
 // Route::post('/encounter', [SatuSehatController::class, 'postEncounter'])->name('encounter.store');

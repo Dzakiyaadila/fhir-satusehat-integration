@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Services\AuthService;
+use App\Services\LocationService;
 use App\Services\MasterDataService;
 use Illuminate\Http\JsonResponse;
 
 class SatuSehatController extends Controller
 {
-    protected $authService;
-    protected $masterService;
-
-    public function __construct(AuthService $authService, MasterDataService $masterService)
-
-       {
-        $this->authService = $authService;
-        $this->masterService = $masterService;
-    }
+    public function __construct(
+        private AuthService $authService,
+        private MasterDataService $masterDataService,
+        private LocationService $locationService,
+    ) {}
 
     public function testSetup(): JsonResponse
     {
@@ -27,8 +24,18 @@ class SatuSehatController extends Controller
         ], 200);
     }
 
-    // Akan diisi stream 3, 4, 5
-    // Stream 3: IHS Number
-    // Stream 4: Location
+    /**
+     * Setup lokasi klinik — POST sekali saat setup awal.
+     * POST /api/location/setup
+     */
+    public function setupLocation(): JsonResponse
+    {
+        $result = $this->locationService->getOrCreateLocation();
+
+        $statusCode = $result['success'] ? 200 : 500;
+
+        return response()->json($result, $statusCode);
+    }
+
     // Stream 5: Encounter
 }
