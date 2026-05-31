@@ -25,7 +25,7 @@ class AuthService
     public function getAccessToken(): string
     {
         // Kriteria: Token disimpan di cache selama 50 menit (~1 jam) agar tidak di-request berulang kali
-        return Cache::remember('satusehat_access_token', 3000, function () {
+        return Cache::remember('satusehat_access_token', 14000, function () {
             return $this->requestNewToken();
         });
     }
