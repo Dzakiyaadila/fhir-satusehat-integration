@@ -13,3 +13,4 @@ Route::get('/patient/{nik}', [SatusehatController::class, 'getPatientIhs'])->nam
 Route::get('/practitioner/{nik}', [SatusehatController::class, 'getPractitionerIhs'])->name('practitioner.ihs');
 Route::post('/location', [SatusehatController::class, 'postLocation'])->name('location.store');
 Route::post('/encounter', [SatusehatController::class, 'postEncounter'])->name('encounter.store');
+Route::put('/encounter/{id}/in-progress', [SatusehatController::class, 'updateToInProgress']); // Sesuaikan nama method-mu

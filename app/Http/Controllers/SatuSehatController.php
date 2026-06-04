@@ -130,4 +130,28 @@ class SatusehatController extends Controller
 
         return response()->json($responsePayload, 201);
     }
+
+    public function updateToInProgress(Request $request, $id)
+    {
+        // Bersihkan ID jika ada karakter aneh seperti '){...}'
+        $cleanId = str_replace([')', '{', '}'], '', $id);
+
+        $responsePayload = [
+            'resourceType' => 'Encounter',
+            'id' => $cleanId,
+            'status' => 'in-progress'
+        ];
+
+        // Simpan log ke database
+        DB::table('integration_logs')->insert([
+            'encounter_id' => $cleanId,
+            'step' => 'ENCOUNTER_UPDATE',
+            'http_status' => 200,
+            'request_payload' => json_encode($request->all()),
+            'response_payload' => json_encode($responsePayload),
+            'created_at' => now(),
+        ]);
+
+        return response()->json($responsePayload, 200);
+    }
 }
