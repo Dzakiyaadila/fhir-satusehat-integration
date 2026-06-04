@@ -115,4 +115,14 @@ class MasterDataService
             'nama' => $nama, // FIX 3
         ];
     }
+
+    public function getPatientIhsByNik(string $nik): array
+    {
+        return $this->getPatientIhs($nik);
+    }
+
+    public function getPractitionerIhsByNik(string $nik): array
+    {
+        return $this->getPractitionerIhs($nik);
+    }
 }

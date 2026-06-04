@@ -14,3 +14,5 @@ Route::get('/test-setup', [SatuSehatController::class, 'testSetup']);
 // Route::get('/practitioner/{nik}', [SatuSehatController::class, 'getPractitionerIhs'])->name('practitioner.ihs');
 Route::post('/location/setup', [SatuSehatController::class, 'setupLocation'])->name('location.setup');
 // Route::post('/encounter', [SatuSehatController::class, 'postEncounter'])->name('encounter.store');
+Route::post('/register', [SatuSehatController::class, 'register'])->name('encounter.store');
+Route::put('/encounter/{id}/in-progress', [SatuSehatController::class, 'updateEncounterInProgress'])->name('encounter.in-progress');
