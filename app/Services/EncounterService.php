@@ -23,13 +23,6 @@ class EncounterService
     // PUBLIC: POST Encounter (status: arrived)
     // =========================================================================
 
-    /**
-     * Daftarkan kunjungan pasien baru ke SATUSEHAT.
-     *
-     * @param  string $nikPasien  NIK KTP pasien (16 digit)
-     * @param  string $nikDokter  NIK KTP dokter (16 digit)
-     * @return array  ['success', 'message', 'encounter_id'?, 'data'?]
-     */
     public function createEncounter(string $nikPasien, string $nikDokter): array
     {
         // ------------------------------------------------------------------
@@ -149,12 +142,6 @@ class EncounterService
     // PUBLIC: PUT Encounter (status: in-progress)
     // =========================================================================
 
-    /**
-     * Update status encounter menjadi in-progress (pasien masuk ruang periksa).
-     *
-     * @param  string $encounterId  UUID Encounter ID dari SATUSEHAT
-     * @return array  ['success', 'message', 'data'?]
-     */
     public function updateToInProgress(string $encounterId): array
     {
         // ------------------------------------------------------------------
@@ -279,7 +266,7 @@ class EncounterService
             ],
             'identifier' => [[
                 'system' => 'http://sys-ids.kemkes.go.id/encounter/' . $this->orgId,
-                'value'  => $nomorInternal,
+                'value'  => $nomorInternal . '-' . date('His'),
             ]],
             'subject' => [
                 'reference' => 'Patient/' . $ihsPasien,

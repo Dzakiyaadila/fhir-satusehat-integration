@@ -39,7 +39,7 @@ class LocationService
             'identifier'   => [
                 [
                     'system' => 'http://sys-ids.kemkes.go.id/location/' . $orgId,
-                    'value'  => 'SS-UKP-POLI-ROOM',
+                    'value'  => 'SS-UKP-POLI-ROOM-'.time()
                 ],
             ],
             'status'      => 'active',
