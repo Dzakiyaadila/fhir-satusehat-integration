@@ -1,0 +1,1164 @@
+{
+  "info": {
+    "_postman_id": "f1c1099c-221a-4e67-bd65-769819cfc7d0",
+    "name": "satusehat-fhir-integration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48190799"
+  },
+  "item": [
+    {
+      "name": "00. Health Check",
+      "item": [
+        {
+          "name": "REQ HC - GET /test-setup",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "",
+                  "pm.test(\"Server Laravel hidup — 200 OK\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Status = OK\", () => {",
+                  "    pm.expect(res.status).to.equal(\"OK\");",
+                  "});",
+                  "",
+                  "console.log(\"Environment:\", res.environment);",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local_url}}/test-setup",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "test-setup"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "REQ HC - GET /test-setup",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/test-setup",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "test-setup"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.29"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 04 Jun 2026 18:22:23 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"status\": \"OK\",\n    \"message\": \"SatuSehat Integration API is running\",\n    \"environment\": \"local\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "01. Auth",
+      "item": [
+        {
+          "name": "REQ R1 - generate access token",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "REQ R1 - generate access token",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "client_id",
+                      "value": "{{client_id}}",
+                      "type": "text",
+                      "uuid": "e803632f-4add-4631-9ac5-292bce6cdae4"
+                    },
+                    {
+                      "key": "client_secret",
+                      "value": "{{client_secret}}",
+                      "type": "text",
+                      "uuid": "7f963bf1-fa06-4693-9723-b9005dda208a"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{auth_url}}/accesstoken?grant_type=client_credentials",
+                  "host": [
+                    "{{auth_url}}"
+                  ],
+                  "path": [
+                    "",
+                    "accesstoken"
+                  ],
+                  "query": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": ":status",
+                  "value": 200
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "9606db99-fe67-43f9-b52f-86b9e610c253"
+                },
+                {
+                  "key": "content-length",
+                  "value": "543"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 04 Jun 2026 18:40:35 GMT"
+                },
+                {
+                  "key": "via",
+                  "value": "1.1 google"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "permissions-policy",
+                  "value": "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "default-src 'self' http: https: data: blob: 'unsafe-inline'"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"refresh_token_expires_in\": \"0\",\n    \"api_product_list\": \"[api-sandbox]\",\n    \"api_product_list_json\": [\n        \"api-sandbox\"\n    ],\n    \"organization_name\": \"ihs-prod-1\",\n    \"developer.email\": \"dzakiyaadila4@gmail.com\",\n    \"token_type\": \"BearerToken\",\n    \"issued_at\": \"1780598436239\",\n    \"client_id\": \"iwQAhWGzgj8JttCj7QMZqgjiduHmAv1Z15iLfsu6AGyBN7mG\",\n    \"access_token\": \"qaXN9BEoMULGJo0SFhDAQRRu9LXd\",\n    \"application_name\": \"02d209fd-5115-4f0f-b630-bb1d927c23f1\",\n    \"scope\": \"\",\n    \"expires_in\": \"86399\",\n    \"refresh_count\": \"0\",\n    \"status\": \"approved\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02. Master Data",
+      "item": [
+        {
+          "name": "REQ R2 - GET Patient by NIK",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "REQ R2 - GET Patient by NIK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient?identifier=https://fhir.kemkes.go.id/id/nik|9271060312000001",
+                  "protocol": "https",
+                  "host": [
+                    "api-satusehat-stg",
+                    "dto",
+                    "kemkes",
+                    "go",
+                    "id"
+                  ],
+                  "path": [
+                    "fhir-r4",
+                    "v1",
+                    "Patient"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifier",
+                      "value": "https://fhir.kemkes.go.id/id/nik|9271060312000001"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": ":status",
+                  "value": 200
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin,X-Origin,Referer"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 04 Jun 2026 18:22:40 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "1484"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "default-src 'self' http: https: data: blob: 'unsafe-inline'"
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin"
+                },
+                {
+                  "key": "permissions-policy",
+                  "value": "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+                },
+                {
+                  "key": "cross-origin-embedder-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-resource-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-opener-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "1f92ffa8-f7e9-4f70-9138-234fb3545b76"
+                },
+                {
+                  "key": "via",
+                  "value": "1.1 google"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"entry\": [\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient/P02478375538\",\n            \"resource\": {\n                \"active\": true,\n                \"id\": \"P02478375538\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"use\": \"official\",\n                        \"value\": \"################\"\n                    },\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/ihs-number\",\n                        \"use\": \"official\",\n                        \"value\": \"P02478375538\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T05:56:19.082343+00:00\",\n                    \"versionId\": \"MTc2NDEzNjU3OTA4MjM0MzAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"pa** 1**\",\n                        \"use\": \"official\"\n                    }\n                ],\n                \"resourceType\": \"Patient\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient/f56a5b30-4788-4c2d-8f20-7b604033cd80\",\n            \"resource\": {\n                \"id\": \"f56a5b30-4788-4c2d-8f20-7b604033cd80\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"################\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-25T08:31:09.485566+00:00\",\n                    \"versionId\": \"MTc2NDA1OTQ2OTQ4NTU2NjAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"Ar** Pu**\"\n                    }\n                ],\n                \"resourceType\": \"Patient\"\n            }\n        }\n    ],\n    \"link\": [\n        {\n            \"relation\": \"search\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C9271060312000001\"\n        },\n        {\n            \"relation\": \"first\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C9271060312000001\"\n        },\n        {\n            \"relation\": \"self\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C9271060312000001\"\n        }\n    ],\n    \"resourceType\": \"Bundle\",\n    \"total\": 2,\n    \"type\": \"searchset\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "REQ R3 - GET Practitioner by NIK",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "REQ R3 - GET Practitioner by NIK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|7209061211900001",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "Practitioner"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifier",
+                      "value": "https://fhir.kemkes.go.id/id/nik|7209061211900001"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": ":status",
+                  "value": 200
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin,X-Origin,Referer"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 04 Jun 2026 18:22:50 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "14388"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "default-src 'self' http: https: data: blob: 'unsafe-inline'"
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin"
+                },
+                {
+                  "key": "permissions-policy",
+                  "value": "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+                },
+                {
+                  "key": "cross-origin-embedder-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-resource-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-opener-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "3383cdc2-f681-4576-a2ab-28d6dec2bfd4"
+                },
+                {
+                  "key": "via",
+                  "value": "1.1 google"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"entry\": [\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/100009880728\",\n            \"resource\": {\n                \"id\": \"100009880728\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-12-19T08:09:41.696225+00:00\",\n                    \"versionId\": \"MTc2NjEzMTc4MTY5NjIyNTAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/1000980728\",\n            \"resource\": {\n                \"id\": \"1000980728\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-12-19T08:02:36.195572+00:00\",\n                    \"versionId\": \"MTc2NjEzMTM1NjE5NTU3MjAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/99f9234a-a838-41e8-8166-0aa24d4780e2\",\n            \"resource\": {\n                \"id\": \"99f9234a-a838-41e8-8166-0aa24d4780e2\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T05:48:31.384715+00:00\",\n                    \"versionId\": \"MTc2NDEzNjExMTM4NDcxNTAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/cccd70ca-4889-4723-9fca-272c0b40f006\",\n            \"resource\": {\n                \"id\": \"cccd70ca-4889-4723-9fca-272c0b40f006\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T05:48:30.050744+00:00\",\n                    \"versionId\": \"MTc2NDEzNjExMDA1MDc0NDAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/dbad95e0-5f23-4034-b8a8-e5697e319d7f\",\n            \"resource\": {\n                \"id\": \"dbad95e0-5f23-4034-b8a8-e5697e319d7f\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T05:48:29.877038+00:00\",\n                    \"versionId\": \"MTc2NDEzNjEwOTg3NzAzODAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/f198fe2a-e535-44e4-9650-07bea6a95dd8\",\n            \"resource\": {\n                \"id\": \"f198fe2a-e535-44e4-9650-07bea6a95dd8\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T05:48:29.725878+00:00\",\n                    \"versionId\": \"MTc2NDEzNjEwOTcyNTg3ODAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/784fc787-fd82-4874-b6ab-24d08898cb7f\",\n            \"resource\": {\n                \"id\": \"784fc787-fd82-4874-b6ab-24d08898cb7f\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T05:48:29.599937+00:00\",\n                    \"versionId\": \"MTc2NDEzNjEwOTU5OTkzNzAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/4d95dd46-aa7c-43f2-b9b4-6726b591e98b\",\n            \"resource\": {\n                \"id\": \"4d95dd46-aa7c-43f2-b9b4-6726b591e98b\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T05:48:28.578284+00:00\",\n                    \"versionId\": \"MTc2NDEzNjEwODU3ODI4NDAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/dd4f2eb6-89a5-44f2-bee0-7b80568619f5\",\n            \"resource\": {\n                \"id\": \"dd4f2eb6-89a5-44f2-bee0-7b80568619f5\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T04:10:32.506620+00:00\",\n                    \"versionId\": \"MTc2NDEzMDIzMjUwNjYyMDAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/15799534-0f0e-4833-b651-a98dc2e33e9e\",\n            \"resource\": {\n                \"id\": \"15799534-0f0e-4833-b651-a98dc2e33e9e\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T04:10:32.046810+00:00\",\n                    \"versionId\": \"MTc2NDEzMDIzMjA0NjgxMDAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/4f997b0b-e698-43e3-a101-9422bcf2c9b7\",\n            \"resource\": {\n                \"id\": \"4f997b0b-e698-43e3-a101-9422bcf2c9b7\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T04:10:31.672081+00:00\",\n                    \"versionId\": \"MTc2NDEzMDIzMTY3MjA4MTAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/578e29a8-b0bc-4f6f-be3f-c995a8c65371\",\n            \"resource\": {\n                \"id\": \"578e29a8-b0bc-4f6f-be3f-c995a8c65371\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T04:10:31.141614+00:00\",\n                    \"versionId\": \"MTc2NDEzMDIzMTE0MTYxNDAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/054c994b-2275-4539-93a2-1957c401c0dc\",\n            \"resource\": {\n                \"id\": \"054c994b-2275-4539-93a2-1957c401c0dc\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-26T04:10:30.356689+00:00\",\n                    \"versionId\": \"MTc2NDEzMDIzMDM1NjY4OTAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/ae018c89-6af2-4c4a-a87b-1b987794be75\",\n            \"resource\": {\n                \"id\": \"ae018c89-6af2-4c4a-a87b-1b987794be75\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-25T08:31:09.485566+00:00\",\n                    \"versionId\": \"MTc2NDA1OTQ2OTQ4NTU2NjAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Na** Ha**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/81dfcb5d-83b2-400f-bfe7-000e6ad38d85\",\n            \"resource\": {\n                \"id\": \"81dfcb5d-83b2-400f-bfe7-000e6ad38d85\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-20T01:44:54.607198+00:00\",\n                    \"versionId\": \"MTc2MzYwMzA5NDYwNzE5ODAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/24679661-dd44-4ab6-8d42-5c8720de7e73\",\n            \"resource\": {\n                \"id\": \"24679661-dd44-4ab6-8d42-5c8720de7e73\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-20T01:43:09.644683+00:00\",\n                    \"versionId\": \"MTc2MzYwMjk4OTY0NDY4MzAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/f5146b20-7a2d-4c6a-b21b-d371ec440855\",\n            \"resource\": {\n                \"id\": \"f5146b20-7a2d-4c6a-b21b-d371ec440855\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-20T01:40:05.217208+00:00\",\n                    \"versionId\": \"MTc2MzYwMjgwNTIxNzIwODAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/056f2fe8-7ef1-457f-95dc-933e2dfd0a15\",\n            \"resource\": {\n                \"id\": \"056f2fe8-7ef1-457f-95dc-933e2dfd0a15\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-20T01:35:12.832299+00:00\",\n                    \"versionId\": \"MTc2MzYwMjUxMjgzMjI5OTAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/af5280f6-407d-482e-a7ff-894947c8b89d\",\n            \"resource\": {\n                \"id\": \"af5280f6-407d-482e-a7ff-894947c8b89d\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-20T01:33:10.321319+00:00\",\n                    \"versionId\": \"MTc2MzYwMjM5MDMyMTMxOTAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/fe08e65b-a5be-435c-ac82-fc0661edbcfe\",\n            \"resource\": {\n                \"id\": \"fe08e65b-a5be-435c-ac82-fc0661edbcfe\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-20T01:27:52.561335+00:00\",\n                    \"versionId\": \"MTc2MzYwMjA3MjU2MTMzNTAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/0a331bb9-40fa-4ccc-8dfc-e02dfa9725fb\",\n            \"resource\": {\n                \"id\": \"0a331bb9-40fa-4ccc-8dfc-e02dfa9725fb\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-19T23:43:50.763310+00:00\",\n                    \"versionId\": \"MTc2MzU5NTgzMDc2MzMxMDAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/e1b71659-6b48-4d2c-8402-d098054b5e99\",\n            \"resource\": {\n                \"id\": \"e1b71659-6b48-4d2c-8402-d098054b5e99\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-19T23:36:10.008660+00:00\",\n                    \"versionId\": \"MTc2MzU5NTM3MDAwODY2MDAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/be6898c6-7d7d-4936-8296-ea42349f7e06\",\n            \"resource\": {\n                \"id\": \"be6898c6-7d7d-4936-8296-ea42349f7e06\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-19T23:33:30.663524+00:00\",\n                    \"versionId\": \"MTc2MzU5NTIxMDY2MzUyNDAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/a7ff8214-ab06-4294-916d-16199e3e024b\",\n            \"resource\": {\n                \"id\": \"a7ff8214-ab06-4294-916d-16199e3e024b\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-19T23:30:55.461572+00:00\",\n                    \"versionId\": \"MTc2MzU5NTA1NTQ2MTU3MjAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/3099a247-30be-4966-9076-54f09b4372a1\",\n            \"resource\": {\n                \"id\": \"3099a247-30be-4966-9076-54f09b4372a1\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-19T23:27:33.298123+00:00\",\n                    \"versionId\": \"MTc2MzU5NDg1MzI5ODEyMzAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/7c7bb73a-6172-4489-8507-f213380a33b9\",\n            \"resource\": {\n                \"id\": \"7c7bb73a-6172-4489-8507-f213380a33b9\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-19T23:20:39.418995+00:00\",\n                    \"versionId\": \"MTc2MzU5NDQzOTQxODk5NTAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        },\n        {\n            \"fullUrl\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/923e0393-1a90-400c-b4d6-7084727f2b71\",\n            \"resource\": {\n                \"id\": \"923e0393-1a90-400c-b4d6-7084727f2b71\",\n                \"identifier\": [\n                    {\n                        \"system\": \"https://fhir.kemkes.go.id/id/nik\",\n                        \"value\": \"7209061211900001\"\n                    },\n                    {\n                        \"system\": \"http://sys-ids.kemkes.go.id/practitioner\",\n                        \"value\": \"10009880728\"\n                    }\n                ],\n                \"meta\": {\n                    \"lastUpdated\": \"2025-11-19T23:20:20.952346+00:00\",\n                    \"versionId\": \"MTc2MzU5NDQyMDk1MjM0NjAwMA\"\n                },\n                \"name\": [\n                    {\n                        \"text\": \"d** Ru** Sp**\"\n                    }\n                ],\n                \"resourceType\": \"Practitioner\"\n            }\n        }\n    ],\n    \"link\": [\n        {\n            \"relation\": \"search\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C7209061211900001\"\n        },\n        {\n            \"relation\": \"first\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C7209061211900001\"\n        },\n        {\n            \"relation\": \"self\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Practitioner/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C7209061211900001\"\n        }\n    ],\n    \"resourceType\": \"Bundle\",\n    \"total\": 27,\n    \"type\": \"searchset\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03. setup Lokasi",
+      "item": [
+        {
+          "name": "REQ R4 - POST Location ke SATUSEHAT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "",
+                  "pm.test(\"Status 201 Created\", () => {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Location ID ada di response\", () => {",
+                  "    pm.expect(res.id).to.be.a('string').and.not.empty;",
+                  "    pm.environment.set(\"location_id\", res.id);",
+                  "    console.log(\"✅ Location ID:\", res.id);",
+                  "});",
+                  "",
+                  "pm.test(\"resourceType = Location\", () => {",
+                  "    pm.expect(res.resourceType).to.equal(\"Location\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"resourceType\": \"Location\",\n    \"identifier\": [\n        {\n            \"system\": \"http://sys-ids.kemkes.go.id/location/{{org_id}}\",\n            \"value\": \"SS-UKP-POLI-ROOM-02\"\n        }\n    ],\n    \"status\": \"active\",\n    \"name\": \"Ruang Poli Umum\",\n    \"description\": \"Ruang Poli Umum\",\n    \"mode\": \"instance\",\n    \"telecom\": [\n        { \"system\": \"phone\", \"value\": \"+621500567\", \"use\": \"work\" },\n        { \"system\": \"email\", \"value\": \"admin@klinik.com\", \"use\": \"work\" },\n        { \"system\": \"url\", \"value\": \"klinik.com\", \"use\": \"work\" }\n    ],\n    \"physicalType\": {\n        \"coding\": [\n            {\n                \"system\": \"http://terminology.hl7.org/CodeSystem/location-physical-type\",\n                \"code\": \"ro\",\n                \"display\": \"Room\"\n            }\n        ]\n    },\n    \"position\": {\n        \"longitude\": 110.3695,\n        \"latitude\": -7.7956,\n        \"altitude\": 0\n    },\n    \"managingOrganization\": {\n        \"reference\": \"Organization/{{org_id}}\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/Location",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "Location"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04. Encounter SATUSEHAT",
+      "item": [
+        {
+          "name": "REQ R5 - POST Encounnter arrived",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "REQ R5 - POST Encounnter arrived",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"resourceType\": \"Encounter\",\n    \"status\": \"arrived\",\n    \"class\": {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\n        \"code\": \"AMB\",\n        \"display\": \"ambulatory\"\n    },\n    \"serviceType\": {\n        \"coding\": [\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"419192003\",\n                \"display\": \"Internal medicine\"\n            }\n        ]\n    },\n    \"identifier\": [\n        {\n            \"system\": \"http://sys-ids.kemkes.go.id/encounter/{{org_id}}\",\n            \"value\": \"ENC-20260604-001-01\"\n        }\n    ],\n    \"subject\": {\n        \"reference\": \"Patient/{{ihs_pasien}}\",\n        \"display\": \"{{nama_pasien}}\"\n    },\n    \"participant\": [\n        {\n            \"type\": [\n                {\n                    \"coding\": [\n                        {\n                            \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\n                            \"code\": \"ATND\",\n                            \"display\": \"attender\"\n                        }\n                    ]\n                }\n            ],\n            \"individual\": {\n                \"reference\": \"Practitioner/{{ihs_dokter}}\",\n                \"display\": \"{{nama_dokter}}\"\n            }\n        }\n    ],\n    \"period\": {\n        \"start\": \"2026-06-04T04:00:00+00:00\"\n    },\n    \"location\": [\n        {\n            \"extension\": [\n                {\n                    \"url\": \"https://fhir.kemkes.go.id/r4/StructureDefinition/ServiceClass\",\n                    \"extension\": [\n                        {\n                            \"url\": \"value\",\n                            \"valueCodeableConcept\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://terminology.kemkes.go.id/CodeSystem/locationServiceClass-Outpatient\",\n                                        \"code\": \"reguler\",\n                                        \"display\": \"Kelas Reguler\"\n                                    }\n                                ]\n                            }\n                        },\n                        {\n                            \"url\": \"upgradeClassIndicator\",\n                            \"valueCodeableConcept\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://terminology.kemkes.go.id/CodeSystem/locationUpgradeClass\",\n                                        \"code\": \"kelas-tetap\",\n                                        \"display\": \"Kelas Tetap Perawatan\"\n                                    }\n                                ]\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"location\": {\n                \"reference\": \"Location/{{location_id}}\",\n                \"display\": \"Ruang Poli Umum\"\n            },\n            \"period\": {\n                \"start\": \"2026-06-04T04:00:00+00:00\"\n            }\n        }\n    ],\n    \"statusHistory\": [\n        {\n            \"status\": \"arrived\",\n            \"period\": {\n                \"start\": \"2026-06-04T04:00:00+00:00\"\n            }\n        }\n    ],\n    \"serviceProvider\": {\n        \"reference\": \"Organization/{{org_id}}\"\n    }\n}\n\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/Encounter",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "Encounter"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": ":status",
+                  "value": 201
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"MTc4MDU5NzUzMTg3MDg2NjAwMA\""
+                },
+                {
+                  "key": "last-modified",
+                  "value": "Thu, 04 Jun 2026 18:25:31 UTC"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "location",
+                  "value": "https://healthcare.googleapis.com/v1/projects/dto-ihs-stg/locations/asia-southeast2/datasets/stg/fhirStores/fhir-r4-staging/fhir/Encounter/e2b15036-ac23-43c2-9076-9a5cde8b527b/_history/MTc4MDU5NzUzMTg3MDg2NjAwMA"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin,X-Origin,Referer"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 04 Jun 2026 18:25:31 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "1700"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "default-src 'self' http: https: data: blob: 'unsafe-inline'"
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin"
+                },
+                {
+                  "key": "permissions-policy",
+                  "value": "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+                },
+                {
+                  "key": "cross-origin-embedder-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-resource-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-opener-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "091c9ffb-2c3c-4f51-8092-70528e4afaf1"
+                },
+                {
+                  "key": "via",
+                  "value": "1.1 google"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"class\": {\n        \"code\": \"AMB\",\n        \"display\": \"ambulatory\",\n        \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\"\n    },\n    \"id\": \"e2b15036-ac23-43c2-9076-9a5cde8b527b\",\n    \"identifier\": [\n        {\n            \"system\": \"http://sys-ids.kemkes.go.id/encounter/7a9814fe-48ea-4dd7-9d1b-9289d9aecbca\",\n            \"value\": \"ENC-20260604-001-01\"\n        }\n    ],\n    \"location\": [\n        {\n            \"extension\": [\n                {\n                    \"extension\": [\n                        {\n                            \"url\": \"value\",\n                            \"valueCodeableConcept\": {\n                                \"coding\": [\n                                    {\n                                        \"code\": \"reguler\",\n                                        \"display\": \"Kelas Reguler\",\n                                        \"system\": \"http://terminology.kemkes.go.id/CodeSystem/locationServiceClass-Outpatient\"\n                                    }\n                                ]\n                            }\n                        },\n                        {\n                            \"url\": \"upgradeClassIndicator\",\n                            \"valueCodeableConcept\": {\n                                \"coding\": [\n                                    {\n                                        \"code\": \"kelas-tetap\",\n                                        \"display\": \"Kelas Tetap Perawatan\",\n                                        \"system\": \"http://terminology.kemkes.go.id/CodeSystem/locationUpgradeClass\"\n                                    }\n                                ]\n                            }\n                        }\n                    ],\n                    \"url\": \"https://fhir.kemkes.go.id/r4/StructureDefinition/ServiceClass\"\n                }\n            ],\n            \"location\": {\n                \"display\": \"Ruang Poli Umum\",\n                \"reference\": \"Location/936c9289-1c62-4d4b-89bf-960b80d9fc85\"\n            },\n            \"period\": {\n                \"start\": \"2026-06-04T04:00:00+00:00\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"lastUpdated\": \"2026-06-04T18:25:31.870866+00:00\",\n        \"versionId\": \"MTc4MDU5NzUzMTg3MDg2NjAwMA\"\n    },\n    \"participant\": [\n        {\n            \"individual\": {\n                \"display\": \"d** Na** Ha**\",\n                \"reference\": \"Practitioner/100009880728\"\n            },\n            \"type\": [\n                {\n                    \"coding\": [\n                        {\n                            \"code\": \"ATND\",\n                            \"display\": \"attender\",\n                            \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\"\n                        }\n                    ]\n                }\n            ]\n        }\n    ],\n    \"period\": {\n        \"start\": \"2026-06-04T04:00:00+00:00\"\n    },\n    \"resourceType\": \"Encounter\",\n    \"serviceProvider\": {\n        \"reference\": \"Organization/7a9814fe-48ea-4dd7-9d1b-9289d9aecbca\"\n    },\n    \"serviceType\": {\n        \"coding\": [\n            {\n                \"code\": \"419192003\",\n                \"display\": \"Internal medicine\",\n                \"system\": \"http://snomed.info/sct\"\n            }\n        ]\n    },\n    \"status\": \"arrived\",\n    \"statusHistory\": [\n        {\n            \"period\": {\n                \"start\": \"2026-06-04T04:00:00+00:00\"\n            },\n            \"status\": \"arrived\"\n        }\n    ],\n    \"subject\": {\n        \"display\": \"pa** 1**\",\n        \"reference\": \"Patient/P02478375538\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "REQ - R5 PUT Encounter",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "REQ - R5 PUT Encounter",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"resourceType\": \"Encounter\",\n    \"id\": \"{{encounter_id}}\",\n    \"status\": \"in-progress\",\n    \"class\": {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\",\n        \"code\": \"AMB\",\n        \"display\": \"ambulatory\"\n    },\n    \"serviceType\": {\n        \"coding\": [\n            {\n                \"system\": \"http://snomed.info/sct\",\n                \"code\": \"419192003\",\n                \"display\": \"Internal medicine\"\n            }\n        ]\n    },\n    \"identifier\": [\n        {\n            \"system\": \"http://sys-ids.kemkes.go.id/encounter/{{org_id}}\",\n            \"value\": \"ENC-20260604-001\"\n        }\n    ],\n    \"subject\": {\n        \"reference\": \"Patient/{{ihs_pasien}}\",\n        \"display\": \"{{nama_pasien}}\"\n    },\n    \"participant\": [\n        {\n            \"type\": [\n                {\n                    \"coding\": [\n                        {\n                            \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\",\n                            \"code\": \"ATND\",\n                            \"display\": \"attender\"\n                        }\n                    ]\n                }\n            ],\n            \"individual\": {\n                \"reference\": \"Practitioner/{{ihs_dokter}}\",\n                \"display\": \"{{nama_dokter}}\"\n            }\n        }\n    ],\n    \"period\": {\n        \"start\": \"2026-06-04T04:00:00+00:00\"\n    },\n    \"location\": [\n        {\n            \"extension\": [\n                {\n                    \"url\": \"https://fhir.kemkes.go.id/r4/StructureDefinition/ServiceClass\",\n                    \"extension\": [\n                        {\n                            \"url\": \"value\",\n                            \"valueCodeableConcept\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://terminology.kemkes.go.id/CodeSystem/locationServiceClass-Outpatient\",\n                                        \"code\": \"reguler\",\n                                        \"display\": \"Kelas Reguler\"\n                                    }\n                                ]\n                            }\n                        },\n                        {\n                            \"url\": \"upgradeClassIndicator\",\n                            \"valueCodeableConcept\": {\n                                \"coding\": [\n                                    {\n                                        \"system\": \"http://terminology.kemkes.go.id/CodeSystem/locationUpgradeClass\",\n                                        \"code\": \"kelas-tetap\",\n                                        \"display\": \"Kelas Tetap Perawatan\"\n                                    }\n                                ]\n                            }\n                        }\n                    ]\n                }\n            ],\n            \"location\": {\n                \"reference\": \"Location/{{location_id}}\",\n                \"display\": \"Ruang Poli Umum\"\n            },\n            \"period\": {\n                \"start\": \"2026-06-04T04:00:00+00:00\"\n            }\n        }\n    ],\n    \"statusHistory\": [\n        {\n            \"status\": \"arrived\",\n            \"period\": {\n                \"start\": \"2026-06-04T04:00:00+00:00\",\n                \"end\": \"2026-06-04T04:15:00+00:00\"\n            }\n        },\n        {\n            \"status\": \"in-progress\",\n            \"period\": {\n                \"start\": \"2026-06-04T04:15:00+00:00\"\n            }\n        }\n    ],\n    \"serviceProvider\": {\n        \"reference\": \"Organization/{{org_id}}\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/Encounter/{{encounter_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "Encounter",
+                    "{{encounter_id}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": ":status",
+                  "value": 200
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"MTc4MDU5NzU3OTMwMzg0MTAwMA\""
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "location",
+                  "value": "https://healthcare.googleapis.com/v1/projects/dto-ihs-stg/locations/asia-southeast2/datasets/stg/fhirStores/fhir-r4-staging/fhir/Encounter/e2b15036-ac23-43c2-9076-9a5cde8b527b/_history/MTc4MDU5NzU3OTMwMzg0MTAwMA"
+                },
+                {
+                  "key": "last-modified",
+                  "value": "Thu, 04 Jun 2026 18:26:19 UTC"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin,X-Origin,Referer"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 04 Jun 2026 18:26:19 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "1807"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "default-src 'self' http: https: data: blob: 'unsafe-inline'"
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin"
+                },
+                {
+                  "key": "permissions-policy",
+                  "value": "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+                },
+                {
+                  "key": "cross-origin-embedder-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-resource-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-opener-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "08bb91c6-8779-4c68-ae6d-f69c239f9843"
+                },
+                {
+                  "key": "via",
+                  "value": "1.1 google"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"class\": {\n        \"code\": \"AMB\",\n        \"display\": \"ambulatory\",\n        \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ActCode\"\n    },\n    \"id\": \"e2b15036-ac23-43c2-9076-9a5cde8b527b\",\n    \"identifier\": [\n        {\n            \"system\": \"http://sys-ids.kemkes.go.id/encounter/7a9814fe-48ea-4dd7-9d1b-9289d9aecbca\",\n            \"value\": \"ENC-20260604-001\"\n        }\n    ],\n    \"location\": [\n        {\n            \"extension\": [\n                {\n                    \"extension\": [\n                        {\n                            \"url\": \"value\",\n                            \"valueCodeableConcept\": {\n                                \"coding\": [\n                                    {\n                                        \"code\": \"reguler\",\n                                        \"display\": \"Kelas Reguler\",\n                                        \"system\": \"http://terminology.kemkes.go.id/CodeSystem/locationServiceClass-Outpatient\"\n                                    }\n                                ]\n                            }\n                        },\n                        {\n                            \"url\": \"upgradeClassIndicator\",\n                            \"valueCodeableConcept\": {\n                                \"coding\": [\n                                    {\n                                        \"code\": \"kelas-tetap\",\n                                        \"display\": \"Kelas Tetap Perawatan\",\n                                        \"system\": \"http://terminology.kemkes.go.id/CodeSystem/locationUpgradeClass\"\n                                    }\n                                ]\n                            }\n                        }\n                    ],\n                    \"url\": \"https://fhir.kemkes.go.id/r4/StructureDefinition/ServiceClass\"\n                }\n            ],\n            \"location\": {\n                \"display\": \"Ruang Poli Umum\",\n                \"reference\": \"Location/936c9289-1c62-4d4b-89bf-960b80d9fc85\"\n            },\n            \"period\": {\n                \"start\": \"2026-06-04T04:00:00+00:00\"\n            }\n        }\n    ],\n    \"meta\": {\n        \"lastUpdated\": \"2026-06-04T18:26:19.303841+00:00\",\n        \"versionId\": \"MTc4MDU5NzU3OTMwMzg0MTAwMA\"\n    },\n    \"participant\": [\n        {\n            \"individual\": {\n                \"display\": \"d** Na** Ha**\",\n                \"reference\": \"Practitioner/100009880728\"\n            },\n            \"type\": [\n                {\n                    \"coding\": [\n                        {\n                            \"code\": \"ATND\",\n                            \"display\": \"attender\",\n                            \"system\": \"http://terminology.hl7.org/CodeSystem/v3-ParticipationType\"\n                        }\n                    ]\n                }\n            ]\n        }\n    ],\n    \"period\": {\n        \"start\": \"2026-06-04T04:00:00+00:00\"\n    },\n    \"resourceType\": \"Encounter\",\n    \"serviceProvider\": {\n        \"reference\": \"Organization/7a9814fe-48ea-4dd7-9d1b-9289d9aecbca\"\n    },\n    \"serviceType\": {\n        \"coding\": [\n            {\n                \"code\": \"419192003\",\n                \"display\": \"Internal medicine\",\n                \"system\": \"http://snomed.info/sct\"\n            }\n        ]\n    },\n    \"status\": \"in-progress\",\n    \"statusHistory\": [\n        {\n            \"period\": {\n                \"end\": \"2026-06-04T04:15:00+00:00\",\n                \"start\": \"2026-06-04T04:00:00+00:00\"\n            },\n            \"status\": \"arrived\"\n        },\n        {\n            \"period\": {\n                \"start\": \"2026-06-04T04:15:00+00:00\"\n            },\n            \"status\": \"in-progress\"\n        }\n    ],\n    \"subject\": {\n        \"display\": \"pa** 1**\",\n        \"reference\": \"Patient/P02478375538\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "05. Laravel-happy path",
+      "item": [
+        {
+          "name": "REQ C1 - Setup Location via Laravel",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "REQ C1 - Setup Location via Laravel",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/location/setup",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "location",
+                    "setup"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.29"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 04 Jun 2026 18:26:36 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": true,\n    \"message\": \"Location sudah ada di database\",\n    \"location_id\": \"a8679dc5-b782-48ec-81d5-57e43ac02c7c\",\n    \"data\": {\n        \"id\": 1,\n        \"nama_ruangan\": \"Ruang Poli Umum\",\n        \"location_id_satusehat\": \"a8679dc5-b782-48ec-81d5-57e43ac02c7c\",\n        \"org_id\": \"7a9814fe-48ea-4dd7-9d1b-9289d9aecbca\",\n        \"created_at\": \"2026-06-04T16:26:46.000000Z\",\n        \"updated_at\": \"2026-06-04T16:26:46.000000Z\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "REQ C2 - Daftarkan Pasien via Laravel  (POST /register)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"nik_pasien\": \"9271060312000001\",\n    \"nik_dokter\": \"7209061211900001\"\n}\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local_url}}/register",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "",
+                  "pm.test(\"Status 200 OK\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"success = true\", () => {",
+                  "    pm.expect(res.success).to.be.true;",
+                  "});",
+                  "",
+                  "pm.test(\"Status berubah ke in-progress\", () => {",
+                  "    pm.expect(res.data.status).to.equal(\"in-progress\");",
+                  "    console.log(\"Status:\", res.data.status);",
+                  "});",
+                  "",
+                  "pm.test(\"waktu_masuk_ruang terisi (UTC+0)\", () => {",
+                  "    pm.expect(res.data.waktu_masuk_ruang).to.be.a('string').and.not.empty;",
+                  "    console.log(\"Waktu masuk ruang:\", res.data.waktu_masuk_ruang);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{local_url}}/encounter/{{encounter_id}}/in-progress",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "encounter",
+                "{{encounter_id}}",
+                "in-progress"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "New Request",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{local_url}}/encounter/{{encounter_id}}/in-progress",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "encounter",
+                    "{{encounter_id}}",
+                    "in-progress"
+                  ]
+                }
+              },
+              "status": "Unprocessable Content",
+              "code": 422,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Host",
+                  "value": "localhost:8000"
+                },
+                {
+                  "key": "Connection",
+                  "value": "close"
+                },
+                {
+                  "key": "X-Powered-By",
+                  "value": "PHP/8.2.29"
+                },
+                {
+                  "key": "Cache-Control",
+                  "value": "no-cache, private"
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 04 Jun 2026 18:30:04 GMT"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "*"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"success\": false,\n    \"message\": \"Encounter sudah berstatus in-progress.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "GET /Integration-logs",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06. Error Cases",
+      "item": [
+        {
+          "name": "REQ E1 - Auth dengan credential salah",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "REQ E2 - GET Patient by NIK tidak terdaftar",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "REQ E2 - GET Patient by NIK tidak terdaftar",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/Patient?identifier=https://fhir.kemkes.go.id/id/nik|3171012345678901",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "Patient"
+                  ],
+                  "query": [
+                    {
+                      "key": "identifier",
+                      "value": "https://fhir.kemkes.go.id/id/nik|3171012345678901"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": ":status",
+                  "value": 200
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "vary",
+                  "value": "Origin,X-Origin,Referer"
+                },
+                {
+                  "key": "date",
+                  "value": "Thu, 04 Jun 2026 18:31:07 GMT"
+                },
+                {
+                  "key": "content-length",
+                  "value": "569"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "1; mode=block"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "content-security-policy",
+                  "value": "default-src 'self' http: https: data: blob: 'unsafe-inline'"
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin"
+                },
+                {
+                  "key": "permissions-policy",
+                  "value": "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+                },
+                {
+                  "key": "cross-origin-embedder-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-resource-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "cross-origin-opener-policy",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "8246be75-1468-438c-964b-09706ae6d9d1"
+                },
+                {
+                  "key": "via",
+                  "value": "1.1 google"
+                },
+                {
+                  "key": "alt-svc",
+                  "value": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"link\": [\n        {\n            \"relation\": \"search\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C3171012345678901\"\n        },\n        {\n            \"relation\": \"first\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C3171012345678901\"\n        },\n        {\n            \"relation\": \"self\",\n            \"url\": \"https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/Patient/?identifier=https%3A%2F%2Ffhir.kemkes.go.id%2Fid%2Fnik%7C3171012345678901\"\n        }\n    ],\n    \"resourceType\": \"Bundle\",\n    \"total\": 0,\n    \"type\": \"searchset\",\n    \"entry\": []\n}"
+            }
+          ]
+        },
+        {
+          "name": "REQ E3 - POST /register dengan NIK tidak terdaftar",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "REQ E4 - POST /register dg format NIK salah",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "REQ E5- PUT in-progress dengan Encounter ID tidak valid",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "REQ E6 - PUT in-progress dua kali",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
