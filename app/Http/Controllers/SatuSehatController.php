@@ -8,6 +8,8 @@ use App\Services\LocationService;
 use App\Services\MasterDataService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Models\IntegrationLog;
+use App\Services\IntegrationLogService;
 
 class SatuSehatController extends Controller
 {
@@ -16,6 +18,7 @@ class SatuSehatController extends Controller
         private MasterDataService $masterDataService,
         private LocationService $locationService,
         private EncounterService $encounterService,
+        // private IntegrationLogService $integrationLogService,
     ) {}
 
     public function testSetup(): JsonResponse
@@ -65,5 +68,17 @@ class SatuSehatController extends Controller
         $statusCode = $result['success'] ? 200 : 422;
 
         return response()->json($result, $statusCode);
+    }
+
+    public function showIntegrationLogs(): JsonResponse
+    {
+        // Mengambil seluruh data log integrasi, diurutkan dari yang paling baru
+        $logs = IntegrationLog::latest()->get();
+
+        return response()->json([
+            'success' => true,
+            'total_logs' => $logs->count(),
+            'data' => $logs
+        ], 200);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Encounter;
 use Illuminate\Support\Facades\Http;
+use App\Models\IntegrationLog;
 
 class EncounterService
 {
@@ -107,6 +108,22 @@ class EncounterService
                 ->withHeaders(['Content-Type' => 'application/json'])
                 ->post($this->baseUrl . '/Encounter', $payload);
         }
+        $isSuccess = $response->status() === 201;
+        
+        // Ambil info error langsung dari server jika gagal
+        $errorMessage = null;
+        if (!$isSuccess) {
+            $responseData = $response->json();
+            $errorMessage = $responseData['issue'][0]['details']['text'] ?? $this->humanErrorMessage($response->status());
+        }
+
+        $this->recordLog(
+            'encounter_create',
+            $response->status(),
+            $payload,
+            $response->json(),
+            $errorMessage
+        );
 
         // ------------------------------------------------------------------
         // 6. Handle response
@@ -201,6 +218,18 @@ class EncounterService
                 ->withHeaders(['Content-Type' => 'application/json'])
                 ->put($this->baseUrl . '/Encounter/' . $encounterId, $payload);
         }
+
+        // =====================================================================
+        // STREAM 7: CATAT LOG PUT ENCOUNTER (SUKSES MAUPUN GAGAL)
+        // =====================================================================
+        $isSuccess = $response->status() === 200;
+        $this->recordLog(
+            'encounter_update',
+            $response->status(),
+            $payload,
+            $response->json(),
+            $isSuccess ? null : $this->humanErrorMessage($response->status())
+        );
 
         // ------------------------------------------------------------------
         // 5. Handle response (PUT sukses = 200 OK)
@@ -355,5 +384,25 @@ class EncounterService
             500 => 'Layanan SATUSEHAT sedang gangguan. Coba beberapa saat lagi.',
             default => 'Terjadi error tidak terduga. HTTP ' . $httpStatus,
         };
+    }
+
+
+    /**
+     * Helper internal untuk mencatat log aktivitas API ke database lokal
+     */
+    private function recordLog(string $step, int $status, ?array $request, ?array $response, ?string $error = null): void
+    {
+        try {
+            IntegrationLog::create([
+                'step' => $step,
+                'http_status'      => $status,
+                'request_payload'  => $request,
+                'response_payload' => $response,
+                'error_message'    => $error,
+            ]);
+        } catch (\Exception $e) {
+            // Jika logging DB gagal, fallback ke log bawaan Laravel agar aplikasi tidak crash
+            \Illuminate\Support\Facades\Log::error("Gagal menyimpan integration_log: " . $e->getMessage());
+        }
     }
 }

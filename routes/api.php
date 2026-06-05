@@ -16,3 +16,5 @@ Route::post('/location/setup', [SatuSehatController::class, 'setupLocation'])->n
 // Route::post('/encounter', [SatuSehatController::class, 'postEncounter'])->name('encounter.store');
 Route::post('/register', [SatuSehatController::class, 'register'])->name('encounter.store');
 Route::put('/encounter/{id}/in-progress', [SatuSehatController::class, 'updateEncounterInProgress'])->name('encounter.in-progress');
+// Route::put('/encounter/{id}/finish', [SatuSehatController::class, 'updateEncounterFinish'])->name('encounter.finish');
+Route::get('/integration/logs', [SatuSehatController::class, 'showIntegrationLogs'])->name('integration.logs');
